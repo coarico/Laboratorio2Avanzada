@@ -4,7 +4,7 @@ public class WalletResponse {
     private final String walletId;
     private final double balance;
 
-
+    //Constructor
     public WalletResponse(String walletId, double balance) {
         this.walletId = walletId;
         this.balance = balance;

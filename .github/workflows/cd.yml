@@ -1,0 +1,32 @@
+name: CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Dar permisos a Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Ejecutar pruebas
+        run: ./gradlew test
+
+      - name: Construir JAR
+        run: ./gradlew build
+
+      - name: Publicar artefacto (JAR)
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-jar
+          path: build/libs/*.jar
